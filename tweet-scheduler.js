@@ -3,6 +3,8 @@ var app = express();
 var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 
+var config = require('./config');
+
 passport.serializeUser(function(user, done) {
     done(null, user);
     // findOrCreate based on id
@@ -14,11 +16,9 @@ passport.deserializeUser(function(obj, done) {
 
 passport.use(new TwitterStrategy(
     config.twitterApi,
-    function(token, tokenSecret, profile, done){
+    function(token, tokenSecret, profile, done) {
         //wrap this in findOrCreate based on profile id
-        function() {
-            return done(null, profile);
-        }
+        return done(null, profile);
     }
 ));
 
