@@ -26,3 +26,4 @@ node_modules
 
 #custom files
 config.js
+public/libs
