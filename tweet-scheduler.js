@@ -24,6 +24,8 @@ passport.use(new TwitterStrategy(
 
 //app.get('/auth/twitter', )
 
+app.use('/public', express.static(process.cwd() + '/public'));
+
 app.get('*', function(req, res) {
     res.sendFile(process.cwd() + '/app.html');
 });
