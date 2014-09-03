@@ -1,0 +1,13 @@
+{
+  "name": "tweet-scheduler",
+  "version": "0.0.1",
+  "description": "tweets, yo",
+  "author": "Brandon Jernigan <brandon@whatisboom.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whatisboom/tweet-scheduler"
+  },
+  "dependencies": {
+    "express": "^4.8.7"
+  }
+}
