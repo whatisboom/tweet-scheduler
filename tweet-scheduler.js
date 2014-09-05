@@ -7,16 +7,22 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
 var mongoose = require('mongoose');
+var connect = require('connect');
+var SessionStore = require('session-mongoose')(connect);
 var models = require('./models');
+var cookieParser = require('cookie-parser');
 
 var config = require('./config');
+
+var store = new SessionStore({
+    url: config.db
+});
 
 mongoose.connect(config.db);
 
 passport.serializeUser(function(user, done) {
     console.log('Serialize User', user._json);
     done(null, user._json);
-    // findOrCreate based on id
 });
 
 passport.deserializeUser(function(obj, done) {
@@ -27,18 +33,21 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy(
     config.twitterApi,
     function(token, tokenSecret, profile, done) {
-        models.User.findOrCreate({id: profile.id}, function(err, user, created) {
+        models.user.findOrCreate({id: profile.id}, function(err, user, created) {
             if (err) { return done(err); }
-            return done(null, user);
+
+            return done(null, profile);
         });
     }
 ));
 
 app.use(bodyParser.json());
+app.use(cookieParser(config.secret));
 app.use(session({
     secret: config.secret,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: store
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -63,7 +72,7 @@ app.get('/', function(req, res) {
     res.sendFile(process.cwd() + '/index.html');
 });
 
-app.get('*',ensureLoggedIn('/auth/twitter') , function(req, res) {
+app.get('*', ensureLoggedIn('/auth/twitter'), function(req, res) {
     res.sendFile(process.cwd() + '/app.html');
 });
 
