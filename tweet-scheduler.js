@@ -31,6 +31,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy(
     config.twitterApi,
     function(token, tokenSecret, profile, done) {
+        console.log(token, tokenSecret);
         models.user.findOrCreate({id: profile.id}, function(err, user, created) {
             if (err) { return done(err); }
 
@@ -53,6 +54,11 @@ app.use(passport.session());
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/scheduler', failureRedirect: '/login'}));
 
+router.use(function(request, response, next) {
+    console.log('API: %s %s %s', request.method,  request.user.screen_name, request.url);
+    next();
+});
+
 router.route('/user')
     .get(function(request, response) {
         var context = {
@@ -70,8 +76,13 @@ app.get('/', function(req, res) {
     res.sendFile(process.cwd() + '/index.html');
 });
 
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
 app.get('*', ensureLoggedIn('/auth/twitter'), function(req, res) {
     res.sendFile(process.cwd() + '/app.html');
 });
 
-app.listen(8080);
+app.listen(80);
