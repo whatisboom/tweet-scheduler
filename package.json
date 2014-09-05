@@ -12,6 +12,7 @@
     "passport-twitter": "^1.0.2",
     "passport": "^0.2.1",
     "express-session": "^1.7.6",
-    "body-parser": "^1.7.0"
+    "body-parser": "^1.7.0",
+    "connect-ensure-login": "^0.1.1"
   }
 }

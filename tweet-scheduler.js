@@ -6,6 +6,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
+var models = require('./models')
 
 var config = require('./config');
 
