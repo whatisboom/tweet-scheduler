@@ -6,9 +6,12 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
-var models = require('./models')
+var mongoose = require('mongoose');
+var models = require('./models');
 
 var config = require('./config');
+
+mongoose.connect(config.db);
 
 passport.serializeUser(function(user, done) {
     console.log('Serialize User', user._json);
@@ -24,8 +27,10 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy(
     config.twitterApi,
     function(token, tokenSecret, profile, done) {
-        //wrap this in findOrCreate based on profile id, return result object
-        return done(null, profile);
+        models.User.findOrCreate({id: profile.id}, function(err, user, created) {
+            if (err) { return done(err); }
+            return done(null, user);
+        });
     }
 ));
 
