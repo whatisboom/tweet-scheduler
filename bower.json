@@ -1,0 +1,22 @@
+{
+  "name": "tweet-scheduler",
+  "main": "tweet-scheduler.js",
+  "version": "0.0.0",
+  "authors": [
+    "Brandon Jernigan <brandon@piqora.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.2.23",
+    "angular": "~1.2.23"
+  }
+}
