@@ -21,12 +21,10 @@ var store = new SessionStore({
 mongoose.connect(config.db);
 
 passport.serializeUser(function(user, done) {
-    console.log('Serialize User', user._json);
     done(null, user._json);
 });
 
 passport.deserializeUser(function(obj, done) {
-    console.log('Deserialize User', obj);
     done(null, obj);
 });
 
