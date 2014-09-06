@@ -5,16 +5,12 @@ angular.module('tweet-scheduler',['ngRoute'])
     }
 
     $routeProvider
-    .when('/', {
-        templateUrl: '/public/partials/scheduler.html',
-        controller: 'SchedulerController'
-    })
     .when('/scheduler', {
         templateUrl: '/public/partials/scheduler.html',
         controller: 'SchedulerController'
     })
     .otherwise({
-        redirectTo: '/'
+        redirectTo: '/scheduler'
     });
 
 }]);

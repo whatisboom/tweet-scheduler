@@ -1,1 +1,16 @@
-<img ng-src="{{ user.profile_image_url }}"><h1 ng-bind="user.name"></h1>
+<nav class="navbar navbar-static-top navbar-inverse">
+    <div class="navbar-header"><a class="navbar-brand" href="#">Tweet Scheduler</a></div>
+    <ul>
+        <li><a ng-click="lougout()">Logout</a></li>
+    </ul>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="xs-col-12">
+            <h1 ng-bind="'@'+user.screen_name"></h1>
+            <form ng-submit="queueTweet()">
+                <button class="btn btn-primary">Queue</button>
+            </form>
+        </div>
+    </div>
+</div>

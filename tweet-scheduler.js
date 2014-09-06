@@ -62,20 +62,25 @@ app.use(passport.session());
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/scheduler', failureRedirect: '/login'}));
 
-router.use(function(request, response, next) {
-    console.log('API: %s %s %s', request.method,  request.user.screen_name, request.url);
+router.use(function(req, res, next) {
+    console.log('API: %s %s %s', req.method,  req.user.screen_name, req.url);
     next();
 });
 
-router.route('/user')
-    .get(function(request, response) {
-        var context = {
-            meta: {
-                user: request.user
-            }
+router.route('/me')
+    .get(function(req, res) {
+        var context = contextBase;
+        context.meta: {
+            user: req.user
         };
-        response.json(context);
+        res.json(context);
     });
+
+router.route('/tweets')
+    .get(function(req, res) {
+        var context = contextBase;
+        
+    })
 
 app.use('/api', router);
 app.use('/public', express.static(process.cwd() + '/public'));
