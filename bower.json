@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "angular-route": "~1.2.23",
-    "angular": "~1.2.23",
-    "semantic": "~0.19.1"
+    "angular": "~1.2.23"
   }
 }
