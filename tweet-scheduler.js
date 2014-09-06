@@ -35,6 +35,11 @@ passport.use(new TwitterStrategy(
         models.user.findOrCreate({id: profile.id}, function(err, user, created) {
             if (err) { return done(err); }
 
+            user.token = token;
+            user.tokenSecret = tokenSecret;
+
+            user.save();
+
             return done(null, profile);
         });
     }

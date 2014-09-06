@@ -3,7 +3,9 @@ var Schema = mongoose.Schema;
 var findOrCreate = require('mongoose-findorcreate');
 
 var UserSchema = new Schema({
-    id: Number
+    id: Number,
+    token: String,
+    tokenSecret: String
 });
 
 UserSchema.plugin(findOrCreate);
