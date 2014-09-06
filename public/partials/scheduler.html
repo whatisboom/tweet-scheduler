@@ -17,6 +17,13 @@
                         <input type="text" class="form-control" ng-model="tweet.text" placeholder="Text">
                     </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                        <select class="form-control" ng-model="tweet.queue" ng-required ng-options="queue.name for queue in data.queues"></select>
+                    </div>
+            </div>
             <div class="col-xs-12 col-md-6">
                     <button class="btn btn-primary">Queue</button>
             </div>
@@ -26,5 +33,5 @@
         <div class="col-xs-12">
             <p ng-repeat="tweet in data.tweets">{{tweet.text}}</p>
         </div>
-    </div>
+    </div>s
 </div>

@@ -21,6 +21,10 @@ var SchedulerController = function($scope, $http, $location) {
             $scope.data.queues = response.data.queues;
         });
 
+    $scope.debug = function() {
+        console.log($scope.tweet.queue);
+    };
+
     $scope.queueTweet = function() {
 
         var data = {
