@@ -1,5 +1,7 @@
 var context = {
-    meta: {},
+    meta: {
+        errors: []
+    },
     data: {}
 };
 

@@ -9,8 +9,10 @@ var mongoose = require('mongoose');
 var connect = require('connect');
 var SessionStore = require('session-mongoose')(connect);
 var cookieParser = require('cookie-parser');
+var extend = require('extend');
 
-var models = require('./models');
+var models = require('./app/models');
+var contextBase = require('./app/context-base');
 var config = require('./config');
 var router = express.Router();
 
@@ -70,17 +72,34 @@ router.use(function(req, res, next) {
 router.route('/me')
     .get(function(req, res) {
         var context = contextBase;
-        context.meta: {
-            user: req.user
-        };
+        context.meta.user = req.user;
         res.json(context);
     });
 
 router.route('/tweets')
     .get(function(req, res) {
         var context = contextBase;
-        
+        models.tweet.find(function(error, tweets) {
+            if (error) {
+                context.meta.errors.push(error);
+            }
+            else {
+                context.data.tweets = tweets
+            }
+        });
+        res.json(context);
     })
+    .post(function(req, res) {
+        var context = contextBase;
+        var tweet = extend(models.tweet(), req.body.tweet);
+        tweet.save(function(error) {
+            if (error) {
+                console.log(error);
+            }
+            context.data.tweet = tweet;
+            res.json(context);
+        });
+    });
 
 app.use('/api', router);
 app.use('/public', express.static(process.cwd() + '/public'));

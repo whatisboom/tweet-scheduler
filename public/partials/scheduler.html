@@ -6,11 +6,25 @@
 </nav>
 <div class="container">
     <div class="row">
-        <div class="xs-col-12">
+        <div class="col-xs-12">
             <h1 ng-bind="'@'+user.screen_name"></h1>
-            <form ng-submit="queueTweet()">
-                <button class="btn btn-primary">Queue</button>
-            </form>
+        </div>
+    </div>
+    <form ng-submit="queueTweet()">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="tweet.text" placeholder="Text">
+                    </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                    <button class="btn btn-primary">Queue</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-xs-12">
+            <p ng-repeat="tweet in tweets">{{tweet.text}}</p>
         </div>
     </div>
 </div>

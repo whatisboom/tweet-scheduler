@@ -1,6 +1,10 @@
 var SchedulerController = function($scope, $http, $location) {
     
     $scope.tweet = {};
+    $scope.data = {
+        tweets: [],
+        queues: []
+    };
 
     $scope.queueTweet = function() {
 
@@ -13,6 +17,7 @@ var SchedulerController = function($scope, $http, $location) {
                 $scope.data.tweets.push(response.data.tweet);
                 $scope.tweet.text = "";
                 $scope.tweet.queue = "";
+                console.log($scope.tweets);
             });
     };
 
