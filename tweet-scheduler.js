@@ -4,15 +4,15 @@ var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var router = express.Router();
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
 var mongoose = require('mongoose');
 var connect = require('connect');
 var SessionStore = require('session-mongoose')(connect);
-var models = require('./models');
 var cookieParser = require('cookie-parser');
 
+var models = require('./models');
 var config = require('./config');
+var router = express.Router();
 
 var store = new SessionStore({
     url: config.db
@@ -37,6 +37,9 @@ passport.use(new TwitterStrategy(
 
             user.token = token;
             user.tokenSecret = tokenSecret;
+            user.profile_image_url = profile._json.profile_image_url;
+            user.screen_name = profile._json.screen_name;
+            user.name = profile._json.name;
 
             user.save();
 
@@ -90,4 +93,4 @@ app.get('*', ensureLoggedIn('/auth/twitter'), function(req, res) {
     res.sendFile(process.cwd() + '/app.html');
 });
 
-app.listen(80);
+app.listen(config.port);

@@ -5,7 +5,10 @@ var findOrCreate = require('mongoose-findorcreate');
 var UserSchema = new Schema({
     id: Number,
     token: String,
-    tokenSecret: String
+    tokenSecret: String,
+    profile_image_url: String,
+    screen_name: String,
+    name: String
 });
 
 UserSchema.plugin(findOrCreate);
