@@ -6,6 +6,21 @@ var SchedulerController = function($scope, $http, $location) {
         queues: []
     };
 
+    $http.get('/api/me')
+        .success(function(response, status, headers, config) {
+            $scope.user = response.meta.user;
+        });
+
+    $http.get('/api/tweets')
+        .success(function(response, status, headers, config) {
+            $scope.data.tweets = response.data.tweets;
+        });
+
+    $http.get('/api/queues')
+        .success(function(response, status, headers, config) {
+            $scope.data.queues = response.data.queues;
+        });
+
     $scope.queueTweet = function() {
 
         var data = {
@@ -17,7 +32,7 @@ var SchedulerController = function($scope, $http, $location) {
                 $scope.data.tweets.push(response.data.tweet);
                 $scope.tweet.text = "";
                 $scope.tweet.queue = "";
-                console.log($scope.tweets);
+                console.log($scope.data.tweets);
             });
     };
 
@@ -27,16 +42,6 @@ var SchedulerController = function($scope, $http, $location) {
             //$location.path($response.location);
         })
     };
-
-    $http.get('/api/me')
-        .success(function(response, status, headers, config) {
-            $scope.user = response.meta.user;
-        });
-
-    $http.get('/api/tweets')
-        .success(function(response, status, headers, config){
-            $scope.tweets = response.data.tweets;
-        });
 
 };
 

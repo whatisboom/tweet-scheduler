@@ -86,8 +86,8 @@ router.route('/tweets')
             else {
                 context.data.tweets = tweets
             }
+            res.json(context);
         });
-        res.json(context);
     })
     .post(function(req, res) {
         var context = contextBase;
@@ -95,8 +95,23 @@ router.route('/tweets')
         tweet.save(function(error) {
             if (error) {
                 console.log(error);
+                context.meta.errors.push(error);
             }
             context.data.tweet = tweet;
+            res.json(context);
+        });
+    });
+
+router.route('/queues')
+    .get(function(req, res) {
+        var context = contextBase;
+
+        models.queue.find(function(error, queues) {
+            if (error) {
+                console.log(error);
+                context.meta.errors.push(error);
+            }
+            context.data.queues = queues;
             res.json(context);
         });
     });
